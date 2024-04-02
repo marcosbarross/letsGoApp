@@ -1,17 +1,15 @@
-package com.example.letsgoapp.ui.notifications
+package com.example.letsgoapp.ui.encontro
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.example.letsgoapp.databinding.FragmentNotificationsBinding
+import com.example.letsgoapp.databinding.FragmentCadastroEncontroBinding
 
-class NotificationsFragment : Fragment() {
+class cadastroEncontro : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
-
+    private var _binding: FragmentCadastroEncontroBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +17,7 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentCadastroEncontroBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
