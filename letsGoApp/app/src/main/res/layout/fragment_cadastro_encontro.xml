@@ -10,12 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/titulo"
+            android:id="@+id/cadastrarPontoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cadastrar ponto de encontro"
@@ -27,46 +27,116 @@
             android:layout_width="match_parent"
             android:layout_height="30px" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/nomeField"
+        <TextView
+            android:id="@+id/nomePontoLabel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="Nome" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nome" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <EditText
+            android:id="@+id/nomePontoInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="30px" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Ponto de encontro" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <TextView
-            android:id="@+id/calendarLabel"
+            android:id="@+id/diasPontoTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Data do ponto de encontro"
+            android:text="Selecione os dias da semana"
             android:textAlignment="center"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <CalendarView
-            android:id="@+id/calendarView2"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBox11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Domingo" />
+
+            <CheckBox
+                android:id="@+id/checkBox5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Segunda" />
+
+            <CheckBox
+                android:id="@+id/checkBox6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terça" />
+
+            <CheckBox
+                android:id="@+id/checkBox7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quarta" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <CheckBox
+                android:id="@+id/checkBox10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quinta" />
+
+            <CheckBox
+                android:id="@+id/checkBox8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sexta" />
+
+            <CheckBox
+                android:id="@+id/checkBox9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sábado" />
+
+        </TableRow>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30px" />
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="301dp" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/encontroHoraLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qual a hora do encontro?"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editTextTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30px" />
 
         <Button
             android:id="@+id/button"
