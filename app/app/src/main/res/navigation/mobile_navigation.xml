@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_mapa">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.letsGoApp.views.usuario.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_mapa"
+        android:name="com.example.letsGoApp.views.MapaFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_mapa" />
+
+    <fragment
+        android:id="@+id/navigation_cadastro_estacionamento"
+        android:name="com.example.letsGoApp.views.CadastroEncontroFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_cadastro_encontro" />
+
+    <fragment
+        android:id="@+id/navigation_cadastro"
+        android:name="com.example.letsGoApp.views.usuario.CadastroFragment"
+        android:label="@string/title_cadastro"
+        tools:layout="@layout/fragment_cadastro" />
+
+    <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.example.letsGoApp.views.usuario.LoginFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_login" />
+
+    <fragment
+        android:id="@+id/navigation_lista"
+        android:name="com.example.letsGoApp.views.ListaFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_lista" />
+
+    <fragment
+        android:id="@+id/navigation_perfil_usuario"
+        android:name="com.example.letsGoApp.views.usuario.PerfilUsuarioFragment"
+        android:label="@string/title_perfil"
+        tools:layout="@layout/fragment_perfil_usuario"
+        />
+
+    <action
+        android:id="@+id/action_home_to_cadastro_estacionamentos"
+        app:destination="@id/navigation_cadastro_estacionamento" />
+
+    <action
+        android:id="@+id/action_home_to_cadastro"
+        app:destination="@id/navigation_cadastro" />
+
+    <action
+        android:id="@+id/action_to_login"
+        app:destination="@id/navigation_login" />
+
+    <action
+        android:id="@+id/action_to_mapa"
+        app:destination="@id/navigation_mapa"
+        />
+
+    <action
+        android:id="@+id/action_to_perfil_usuario"
+        app:destination="@id/navigation_perfil_usuario"
+        />
+
+</navigation>
