@@ -25,9 +25,9 @@
 
     <fragment
         android:id="@+id/navigation_cadastro"
-        android:name="com.example.letsGoApp.views.usuario.CadastroFragment"
+        android:name="com.example.letsGoApp.views.usuario.cadastroUsuarioFragment"
         android:label="@string/title_cadastro"
-        tools:layout="@layout/fragment_cadastro" />
+        tools:layout="@layout/fragment_cadastro_usuario" />
 
     <fragment
         android:id="@+id/navigation_login"
