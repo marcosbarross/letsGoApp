@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_mapa" />
 
     <fragment
-        android:id="@+id/navigation_cadastro_estacionamento"
-        android:name="com.example.letsGoApp.views.CadastroEncontroFragment"
+        android:id="@+id/navigation_cadastro_ponto"
+        android:name="com.example.letsGoApp.views.pontos.cadastroPonto"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_cadastro_encontro" />
+        tools:layout="@layout/fragment_cadastro_ponto" />
 
     <fragment
         android:id="@+id/navigation_cadastro"
@@ -50,7 +50,7 @@
 
     <action
         android:id="@+id/action_home_to_cadastro_estacionamentos"
-        app:destination="@id/navigation_cadastro_estacionamento" />
+        app:destination="@id/navigation_cadastro_ponto" />
 
     <action
         android:id="@+id/action_home_to_cadastro"

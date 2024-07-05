@@ -7,15 +7,53 @@
     android:layout_height="match_parent"
     tools:context=".views.pontos.cadastroPonto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="@string/hello_blank_fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cadastrar ponto de encontro"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:paddingBottom="16dp" />
+
+            <EditText
+                android:id="@+id/editTextAtividade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Atividade"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/editTextHorario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Horário"
+                android:inputType="time" />
+
+            <EditText
+                android:id="@+id/editTextDiasSemana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dias da Semana"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salvar"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
