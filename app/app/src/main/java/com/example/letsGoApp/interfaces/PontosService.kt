@@ -1,31 +1,31 @@
 package com.example.letsGoApp.interfaces
 
-import com.example.letsGoApp.models.DistanciaResponse
+import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.models.pontos
-import com.example.letsGoApp.models.pontosOrdenados
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface PontosService {
-    @GET("/GetEstacionamentos/")
-    fun getPoints(): Call<List<pontos>>
 
-    @POST("/AddEstacionamento/")
-    fun addPoint(@Body ponto: pontos): Call<Void>
-    @GET("/CalcularDistancia/")
-    fun CalcularDistancia(
-        @Query("lat1") lat1: Double,
-        @Query("lon1") lon1: Double,
-        @Query("lat2") lat2: Double,
-        @Query("lon2") lon2: Double
-    ): Call<DistanciaResponse>
+    @GET("pontos")
+    fun getPontos(): Call<List<pontos>>
 
-    @GET("/GetEstacionamentosOrdenados/")
-    fun getEstacionamentosOrdenados(
-        @Query("lat") lat : Double,
-        @Query("lon") lon : Double
-    ) : Call <List<pontosOrdenados>>
+    @GET("pontos/{id}")
+    fun getPonto(@Path("id") id: Int): Call<pontos>
+
+    @POST("pontos")
+    fun createPonto(@Body pontos: pontos): Call<pontos>
+
+    @PUT("pontos/{id}")
+    fun updatePonto(@Path("id") id: Int, @Body pontos: pontos): Call<pontos>
+
+    @DELETE("pontos/{id}")
+    fun deletePonto(@Path("id") id: Int): Call<Void>
+
+    @GET("pontos/ordenados")
+    fun getPontosOrdenados(
+        @Query("latitude") latitude: Double,
+        @Query("longitude") longitude: Double
+    ): Call<List<PontoOrdenado>>
 }
+
