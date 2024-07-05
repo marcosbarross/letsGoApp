@@ -2,6 +2,7 @@ package com.example.letsGoApp.views.usuario
 
 import com.example.letsGoApp.interfaces.UsuariosService
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -43,15 +44,17 @@ class LoginFragment : Fragment() {
                 val senha = view.findViewById<EditText>(R.id.passwordInput).text.toString().toSHA256()
                 val usuario = usuarioAuth(email, senha)
 
-                usuariosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(
-                    UsuariosService::class.java)
+                usuariosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(UsuariosService::class.java)
                 usuariosService.autenticarUsuario(usuario).enqueue(object : Callback<AuthResponse> {
                     override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
+                        Log.d("API_RESPONSE", "Response: ${response.body()}")
+                        Log.d("API_RESPONSE", "Error Body: ${response.errorBody()?.string()}")
+                        Log.d("API_RESPONSE", "Request: ${call.request().body().toString()}")
+
                         if (response.isSuccessful) {
                             val authResponse = response.body()
                             if (authResponse != null) {
-                                val idUsuario = authResponse.userId
-                                sharedViewModel.setUserId(idUsuario)
+                                sharedViewModel.setUserId(authResponse.userId)
                                 sharedViewModel.setLogged(true)
 
                                 Toast.makeText(context, "Autenticação bem-sucedida", Toast.LENGTH_SHORT).show()
@@ -60,6 +63,7 @@ class LoginFragment : Fragment() {
                                 Toast.makeText(context, "Resposta inválida do servidor", Toast.LENGTH_SHORT).show()
                             }
                         } else {
+                            Log.d("API_ERROR", "${usuario.email}, ${response.errorBody()?.string()} ,${usuario.senha}")
                             Toast.makeText(context, "Credenciais inválidas", Toast.LENGTH_SHORT).show()
                         }
                     }

@@ -8,10 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.letsGoApp.interfaces.PontosService
 import com.example.letsGoApp.controllers.apiUtils.Companion.getPathString
-import com.example.letsGoApp.controllers.EstacionamentoAdapter
+import com.example.letsGoApp.controllers.PontosAdapter
 import com.example.letsGoApp.controllers.LocationController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.letsGoApp.models.pontosOrdenados
+import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.databinding.FragmentListaBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,21 +58,21 @@ class ListaFragment : Fragment() {
             val longitude = withContext(Dispatchers.Main) {
                 locationController.getLongitude()
             }
-            service.getEstacionamentosOrdenados(latitude, longitude).enqueue(object : Callback<List<pontosOrdenados>> {
+            service.getPontosOrdenados(latitude, longitude).enqueue(object : Callback<List<PontoOrdenado>> {
                 override fun onResponse(
-                    call: Call<List<pontosOrdenados>>,
-                    response: Response<List<pontosOrdenados>>
+                    call: Call<List<PontoOrdenado>>,
+                    response: Response<List<PontoOrdenado>>
                 ) {
                     if (response.isSuccessful) {
-                        val estacionamentos = response.body()
-                        estacionamentos?.let {
-                            exibirEstacionamentos(estacionamentos)
+                        val pontos = response.body()
+                        pontos?.let {
+                            exibirPontos(pontos)
                         }
                     } else {
                         // TODO: Lidar com erro de resposta da API
                     }
                 }
-                override fun onFailure(call: Call<List<pontosOrdenados>>, t: Throwable) {
+                override fun onFailure(call: Call<List<PontoOrdenado>>, t: Throwable) {
                     Toast.makeText(requireContext(), "Falha na requisição: " + t.message, Toast.LENGTH_SHORT).show()
                 }
             })
@@ -80,8 +80,8 @@ class ListaFragment : Fragment() {
         return root
     }
 
-    private fun exibirEstacionamentos(estacionamentos: List<pontosOrdenados>) {
-        val adapter = EstacionamentoAdapter(estacionamentos, locationController)
+    private fun exibirPontos(pontos: List<PontoOrdenado>) {
+        val adapter = PontosAdapter(pontos, locationController)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }

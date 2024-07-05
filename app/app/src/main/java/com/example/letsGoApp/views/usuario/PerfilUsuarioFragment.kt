@@ -18,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PerfilUsuarioFragment : Fragment() {
-    private lateinit var sairButton : Button
+    private lateinit var sairButton: Button
     private lateinit var nomeUsuarioLabel: TextView
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var usuariosService: UsuariosService
@@ -31,7 +31,7 @@ class PerfilUsuarioFragment : Fragment() {
         sairButton = rootView.findViewById(R.id.logoutUserButton)
         nomeUsuarioLabel = rootView.findViewById(R.id.nomeUsuarioLabel)
 
-        sairButton.setOnClickListener{
+        sairButton.setOnClickListener {
             sharedViewModel.setUserId(Int.MIN_VALUE)
             sharedViewModel.setLogged(false)
             findNavController().navigate(R.id.navigation_mapa)
@@ -47,8 +47,8 @@ class PerfilUsuarioFragment : Fragment() {
 
         val idUsuario = sharedViewModel.userId.value
         idUsuario?.let { userId ->
-            usuariosService.getUsuarioPorId(userId).enqueue(object : Callback<usuario> {
-                override fun onResponse(call: Call<usuario>, response: Response<usuario>)  {
+            usuariosService.getUsuario(userId).enqueue(object : Callback<usuario> {
+                override fun onResponse(call: Call<usuario>, response: Response<usuario>) {
                     if (response.isSuccessful) {
                         val usuario = response.body()
                         if (usuario != null) {
@@ -56,12 +56,13 @@ class PerfilUsuarioFragment : Fragment() {
                         }
                     }
                 }
+
                 override fun onFailure(call: Call<usuario>, t: Throwable) {
                     // TODO: Tratar o caso de falha na comunicação com a API
                 }
             })
         } ?: run {
-            // Todo: Tratar o caso em que idUsuario é nulo
+            // TODO: Tratar o caso em que idUsuario é nulo
         }
     }
 }

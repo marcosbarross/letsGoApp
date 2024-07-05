@@ -29,5 +29,4 @@ class SharedViewModel : ViewModel() {
     fun getUserId(): Int? {
         return _userId.value
     }
-
 }
