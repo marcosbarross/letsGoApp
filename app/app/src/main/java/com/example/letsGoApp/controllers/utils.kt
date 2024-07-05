@@ -7,7 +7,7 @@ import android.util.Patterns
 
 class apiUtils {
     companion object {
-        val path = "http://10.0.0.144:8000/"
+        val path = "http://192.168.1.107:8000"
 
         fun getRetrofitInstance(path: String): Retrofit {
             return Retrofit.Builder()
@@ -30,6 +30,5 @@ class apiUtils {
         fun isEmailValid(email: String): Boolean {
             return Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
-
     }
 }
