@@ -39,7 +39,8 @@
         android:id="@+id/navigation_lista"
         android:name="com.example.letsGoApp.views.ListaFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_lista" />
+        tools:layout="@layout/fragment_lista" >
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_perfil_usuario"
@@ -47,6 +48,12 @@
         android:label="@string/title_perfil"
         tools:layout="@layout/fragment_perfil_usuario"
         />
+
+    <fragment
+        android:id="@+id/detalhesFragment"
+        android:name="com.example.letsGoApp.views.pontos.DetalhesFragment"
+        android:label="Detalhes do Ponto"
+        tools:layout="@layout/fragment_detalhes" />
 
     <action
         android:id="@+id/action_home_to_cadastro_estacionamentos"
@@ -69,5 +76,9 @@
         android:id="@+id/action_to_perfil_usuario"
         app:destination="@id/navigation_perfil_usuario"
         />
+
+    <action
+        android:id="@+id/action_navigation_lista_to_detalhesFragment"
+        app:destination="@id/detalhesFragment" />
 
 </navigation>

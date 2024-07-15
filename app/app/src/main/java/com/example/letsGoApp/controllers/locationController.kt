@@ -19,38 +19,20 @@ class LocationController(private val fragment: Fragment, private val callback: L
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(fragment.requireContext())
     }
 
-    suspend fun getLatitude(): Double {
-        return if (ActivityCompat.checkSelfPermission(
+    suspend fun start() {
+        if (ActivityCompat.checkSelfPermission(
                 fragment.requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             requestPermission()
-            0.0
         } else {
             val location = fusedLocationProviderClient.lastLocation.await()
-            mLocation = location
-            location?.latitude ?: run {
+            if (location != null) {
+                mLocation = location
+                callback.onLocationReceived(location.latitude, location.longitude)
+            } else {
                 callback.onLocationFailed()
-                0.0
-            }
-        }
-    }
-
-    suspend fun getLongitude(): Double {
-        return if (ActivityCompat.checkSelfPermission(
-                fragment.requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            requestPermission()
-            0.0
-        } else {
-            val location = fusedLocationProviderClient.lastLocation.await()
-            mLocation = location
-            location?.longitude ?: run {
-                callback.onLocationFailed()
-                0.0
             }
         }
     }

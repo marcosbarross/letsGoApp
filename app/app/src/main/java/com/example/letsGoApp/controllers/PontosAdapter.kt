@@ -8,8 +8,13 @@ import com.example.letsGoApp.databinding.ItemEncontroBinding
 
 class PontosAdapter(
     private val pontos: List<PontoOrdenado>,
-    private val locationController: LocationController
+    private val locationController: LocationController,
+    private val itemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<PontosAdapter.PontoViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClick(ponto: PontoOrdenado)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PontoViewHolder {
         val binding = ItemEncontroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,8 +32,12 @@ class PontosAdapter(
 
     inner class PontoViewHolder(private val binding: ItemEncontroBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(ponto: PontoOrdenado) {
-            binding.nomeTextView.text = ponto.nome
-            binding.infoTextView.text = "${ponto.distancia} km"
+            binding.nomeAtividadeDetalhes.text = ponto.nome
+            binding.infoTextView.text = "${ponto.atividade} a ${Math.round(ponto.distancia)} km \n${ponto.diasSemana} às ${ponto.horario}"
+
+            binding.root.setOnClickListener {
+                itemClickListener.onItemClick(ponto)
+            }
         }
     }
 }

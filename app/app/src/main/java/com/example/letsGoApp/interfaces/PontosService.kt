@@ -6,7 +6,6 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface PontosService {
-
     @GET("pontos")
     fun getPontos(): Call<List<pontos>>
 
@@ -28,4 +27,5 @@ interface PontosService {
         @Query("longitude") longitude: Double
     ): Call<List<PontoOrdenado>>
 }
+
 

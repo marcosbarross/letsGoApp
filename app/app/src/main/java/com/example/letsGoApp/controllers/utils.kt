@@ -7,7 +7,7 @@ import android.util.Patterns
 
 class apiUtils {
     companion object {
-        val path = "http://192.168.1.107:8000"
+        val path = "http://192.168.1.113:8000/"
 
         fun getRetrofitInstance(path: String): Retrofit {
             return Retrofit.Builder()

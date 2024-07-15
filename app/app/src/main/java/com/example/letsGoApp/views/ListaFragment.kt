@@ -6,24 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.letsGoApp.R
+import com.example.letsGoApp.databinding.FragmentListaBinding
 import com.example.letsGoApp.interfaces.PontosService
-import com.example.letsGoApp.controllers.apiUtils.Companion.getPathString
+import com.example.letsGoApp.controllers.apiUtils
 import com.example.letsGoApp.controllers.PontosAdapter
 import com.example.letsGoApp.controllers.LocationController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.letsGoApp.models.PontoOrdenado
-import com.example.letsGoApp.databinding.FragmentListaBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class ListaFragment : Fragment() {
+class ListaFragment : Fragment(), PontosAdapter.OnItemClickListener {
 
     private var _binding: FragmentListaBinding? = null
     private val binding get() = _binding!!
@@ -37,53 +36,57 @@ class ListaFragment : Fragment() {
         _binding = FragmentListaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(getPathString())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
+        val retrofit = apiUtils.getRetrofitInstance(apiUtils.getPathString())
         val service = retrofit.create(PontosService::class.java)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            locationController = LocationController(this@ListaFragment, object : LocationController.LocationCallback {
-                override fun onLocationReceived(latitude: Double, longitude: Double) {
-                }
-                override fun onLocationFailed() {
-                }
-            })
-
-            val latitude = withContext(Dispatchers.Main) {
-                locationController.getLatitude()
-            }
-            val longitude = withContext(Dispatchers.Main) {
-                locationController.getLongitude()
-            }
-            service.getPontosOrdenados(latitude, longitude).enqueue(object : Callback<List<PontoOrdenado>> {
-                override fun onResponse(
-                    call: Call<List<PontoOrdenado>>,
-                    response: Response<List<PontoOrdenado>>
-                ) {
-                    if (response.isSuccessful) {
-                        val pontos = response.body()
-                        pontos?.let {
-                            exibirPontos(pontos)
+        locationController = LocationController(this@ListaFragment, object : LocationController.LocationCallback {
+            override fun onLocationReceived(latitude: Double, longitude: Double) {
+                service.getPontosOrdenados(latitude, longitude).enqueue(object : Callback<List<PontoOrdenado>> {
+                    override fun onResponse(
+                        call: Call<List<PontoOrdenado>>,
+                        response: Response<List<PontoOrdenado>>
+                    ) {
+                        if (response.isSuccessful) {
+                            val pontos = response.body()
+                            pontos?.let {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    exibirPontos(pontos)
+                                }
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Erro na resposta da API", Toast.LENGTH_SHORT).show()
                         }
-                    } else {
-                        // TODO: Lidar com erro de resposta da API
                     }
-                }
-                override fun onFailure(call: Call<List<PontoOrdenado>>, t: Throwable) {
-                    Toast.makeText(requireContext(), "Falha na requisição: " + t.message, Toast.LENGTH_SHORT).show()
-                }
-            })
+
+                    override fun onFailure(call: Call<List<PontoOrdenado>>, t: Throwable) {
+                        Toast.makeText(requireContext(), "Falha na requisição: " + t.message, Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
+
+            override fun onLocationFailed() {
+                Toast.makeText(requireContext(), "Falha ao obter localização", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        CoroutineScope(Dispatchers.Main).launch {
+            locationController.start()
         }
+
         return root
     }
 
     private fun exibirPontos(pontos: List<PontoOrdenado>) {
-        val adapter = PontosAdapter(pontos, locationController)
+        val adapter = PontosAdapter(pontos, locationController, this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onItemClick(ponto: PontoOrdenado) {
+        val bundle = Bundle().apply {
+            putParcelable("ponto", ponto)
+        }
+        findNavController().navigate(R.id.action_navigation_lista_to_detalhesFragment, bundle)
     }
 
     override fun onDestroyView() {
