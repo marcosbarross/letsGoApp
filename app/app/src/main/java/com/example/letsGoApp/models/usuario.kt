@@ -20,5 +20,6 @@ data class usuarioAuth(
 
 data class AuthResponse(
     @SerializedName("status_code") val statusCode: Int,
-    @SerializedName("id_usuario") val userId: Int
+    @SerializedName("id_usuario") val userId: Int,
+    @SerializedName("email_usuario") val userEmail: String
 )

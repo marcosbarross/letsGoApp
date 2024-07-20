@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
     private val _isLogged = MutableLiveData<Boolean>()
+    private val userEmail = MutableLiveData<String>()
+
     val isLogged: LiveData<Boolean>
         get() = _isLogged
 
@@ -28,5 +30,13 @@ class SharedViewModel : ViewModel() {
 
     fun getUserId(): Int? {
         return _userId.value
+    }
+
+    fun getUserEmail(): String? {
+        return userEmail.value
+    }
+
+    fun setUserEmail(email: String) {
+        userEmail.value = email
     }
 }

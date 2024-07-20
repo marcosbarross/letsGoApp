@@ -29,8 +29,7 @@ class ListaFragment : Fragment(), PontosAdapter.OnItemClickListener {
     private lateinit var locationController: LocationController
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListaBinding.inflate(inflater, container, false)

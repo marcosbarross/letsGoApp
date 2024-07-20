@@ -1,7 +1,10 @@
 package com.example.letsGoApp.interfaces
 
+import com.example.letsGoApp.models.AuthResponse
 import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.models.pontos
+import com.example.letsGoApp.models.usuario
+import com.example.letsGoApp.models.usuarioAuth
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -26,6 +29,20 @@ interface PontosService {
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
     ): Call<List<PontoOrdenado>>
+
+    @POST("auth/")
+    fun authenticateUsuario(@Body usuario: usuarioAuth): Call<AuthResponse>
+
+    @POST("usuarios/")
+    fun createUsuario(@Body usuario: usuario): Call<usuario>
+
+
+    @POST("pontos/{ponto_id}/entrar")
+    fun entrarNoPonto(@Path("ponto_id") pontoId: Int, @Query("usuario_email") usuarioEmail: String): Call<Void>
+
+    @POST("pontos/{ponto_id}/sair")
+    fun sairDoPonto(@Path("ponto_id") pontoId: Int, @Query("usuario_email") usuarioEmail: String): Call<Void>
+
+    @GET("pontos/{ponto_id}/usuarios")
+    fun getUsuariosDoPonto(@Path("ponto_id") pontoId: Int): Call<List<usuario>>
 }
-
-

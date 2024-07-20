@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:foregroundGravity="center"
     tools:context=".views.pontos.cadastroPonto">
 
     <ScrollView
@@ -21,11 +22,11 @@
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
                 android:text="Cadastrar ponto de encontro"
                 android:textAlignment="center"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:paddingBottom="16dp" />
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTextAtividade"
@@ -41,19 +42,89 @@
                 android:hint="Horário"
                 android:inputType="time" />
 
-            <EditText
-                android:id="@+id/editTextDiasSemana"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Dias da Semana"
-                android:inputType="text" />
+                android:paddingTop="16dp"
+                android:text="Dias da Semana"
+                android:textAlignment="center"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/radioGroupDiasSemana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="center">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxSegunda"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Segunda-feira" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxTerca"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Terça-feira" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxQuarta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quarta-feira" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkBoxQuinta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quinta-feira" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxSexta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sexta-feira" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxSabado"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sábado" />
+
+                    <CheckBox
+                        android:id="@+id/checkBoxDomingo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Domingo" />
+                </TableRow>
+
+            </RadioGroup>
 
             <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Salvar"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                android:text="Cadastrar" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

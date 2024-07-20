@@ -55,6 +55,7 @@ class LoginFragment : Fragment() {
                             val authResponse = response.body()
                             if (authResponse != null) {
                                 sharedViewModel.setUserId(authResponse.userId)
+                                sharedViewModel.setUserEmail(authResponse.userEmail)
                                 sharedViewModel.setLogged(true)
 
                                 Toast.makeText(context, "Autenticação bem-sucedida", Toast.LENGTH_SHORT).show()
