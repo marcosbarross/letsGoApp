@@ -81,4 +81,11 @@
         android:id="@+id/action_navigation_lista_to_detalhesFragment"
         app:destination="@id/detalhesFragment" />
 
+    <action
+        android:id="@+id/action_navigation_perfil_usuario_to_detalhesFragment"
+        app:destination="@id/detalhesFragment">
+    </action>
+
+
+
 </navigation>

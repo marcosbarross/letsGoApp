@@ -36,7 +36,6 @@ interface PontosService {
     @POST("usuarios/")
     fun createUsuario(@Body usuario: usuario): Call<usuario>
 
-
     @POST("pontos/{ponto_id}/entrar")
     fun entrarNoPonto(@Path("ponto_id") pontoId: Int, @Query("usuario_email") usuarioEmail: String): Call<Void>
 
@@ -45,4 +44,5 @@ interface PontosService {
 
     @GET("pontos/{ponto_id}/usuarios")
     fun getUsuariosDoPonto(@Path("ponto_id") pontoId: Int): Call<List<usuario>>
+
 }

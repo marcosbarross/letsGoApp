@@ -39,4 +39,13 @@ class SharedViewModel : ViewModel() {
     fun setUserEmail(email: String) {
         userEmail.value = email
     }
+
+    fun getUserStatus(sharedViewModel: SharedViewModel) : Boolean {
+        if (_isLogged.value == true){
+            return true
+        }
+        else{
+            return false
+        }
+    }
 }

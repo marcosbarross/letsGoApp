@@ -1,8 +1,9 @@
-package com.example.letsGoApp.controllers
+package com.example.letsGoApp.views.pontos
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.letsGoApp.controllers.LocationController
 import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.databinding.ItemEncontroBinding
 

@@ -4,10 +4,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.MessageDigest
 import android.util.Patterns
+import java.util.stream.DoubleStream.concat
 
 class apiUtils {
     companion object {
-        val path = "http://192.168.1.107:8000/"
+        val path = "http://192.168.1.113:8000/"
 
         fun getRetrofitInstance(path: String): Retrofit {
             return Retrofit.Builder()
@@ -29,6 +30,11 @@ class apiUtils {
 
         fun isEmailValid(email: String): Boolean {
             return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        }
+
+        fun capitalize(string: String): String {
+             val capitalized = string.substring(0, 1).uppercase() + string.substring(1)
+            return capitalized
         }
     }
 }

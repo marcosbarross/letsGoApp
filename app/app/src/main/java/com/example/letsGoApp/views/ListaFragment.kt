@@ -12,7 +12,7 @@ import com.example.letsGoApp.R
 import com.example.letsGoApp.databinding.FragmentListaBinding
 import com.example.letsGoApp.interfaces.PontosService
 import com.example.letsGoApp.controllers.apiUtils
-import com.example.letsGoApp.controllers.PontosAdapter
+import com.example.letsGoApp.views.pontos.PontosAdapter
 import com.example.letsGoApp.controllers.LocationController
 import com.example.letsGoApp.models.PontoOrdenado
 import kotlinx.coroutines.CoroutineScope

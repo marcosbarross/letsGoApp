@@ -14,12 +14,6 @@
         android:orientation="vertical"
         android:paddingTop="20dp">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:src="@tools:sample/avatars" />
-
         <TextView
             android:id="@+id/nomeUsuarioLabel"
             android:layout_width="match_parent"
@@ -29,6 +23,19 @@
             android:text="Nome do usuário"
             android:textColor="@color/white"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Grupos:" />
+
+        <ListView
+            android:id="@+id/pontosListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingTop="10dp" />
 
     </LinearLayout>
 

@@ -5,7 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class PontoOrdenado(
-    @SerializedName("id") val id: Int,
+    @SerializedName("id") var id: Int,
     @SerializedName("nome") val nome: String,
     @SerializedName("latitude") val latitude: Double,
     @SerializedName("longitude") val longitude: Double,

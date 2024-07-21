@@ -1,8 +1,6 @@
 package com.example.letsGoApp.views.pontos
 
-import com.example.letsGoApp.controllers.UsuarioAdapter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,24 +10,23 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.letsGoApp.R
-import com.example.letsGoApp.interfaces.PontosService
+import com.example.letsGoApp.controllers.DetalhesController
+import com.example.letsGoApp.views.usuario.UsuarioAdapter
 import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.views.usuario.SharedViewModel
-import com.example.letsGoApp.controllers.apiUtils
-import com.example.letsGoApp.models.usuario
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetalhesFragment : Fragment() {
 
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val detalhesViewModel: DetalhesController by viewModels()
 
     private lateinit var nomeAtividadeDetalhes: TextView
     private lateinit var infoTextView: TextView
@@ -38,8 +35,6 @@ class DetalhesFragment : Fragment() {
     private lateinit var listViewUsuarios: ListView
     private lateinit var mapViewDetalhes: MapView
     private lateinit var mMap: GoogleMap
-
-    private lateinit var pontosService: PontosService
 
     private lateinit var ponto: PontoOrdenado
 
@@ -66,8 +61,6 @@ class DetalhesFragment : Fragment() {
             mMap.addMarker(MarkerOptions().position(pontoLatLng).title(ponto.nome))
         }
 
-        pontosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(PontosService::class.java)
-
         ponto = arguments?.getParcelable("ponto") ?: return view
 
         nomeAtividadeDetalhes.text = ponto.nome
@@ -76,15 +69,15 @@ class DetalhesFragment : Fragment() {
         if (sharedViewModel.isLogged.value == true) {
             val userEmail = sharedViewModel.getUserEmail()
             if (userEmail != null) {
-                verificarParticipacao(userEmail)
-                carregarUsuariosDoPonto()
+                detalhesViewModel.verificarParticipacao(ponto.id, userEmail)
+                detalhesViewModel.carregarUsuariosDoPonto(ponto.id)
             }
         }
 
         buttonParticipar.setOnClickListener {
             if (sharedViewModel.isLogged.value == true) {
                 val userEmail = sharedViewModel.getUserEmail() ?: return@setOnClickListener
-                entrarNoGrupo(userEmail)
+                detalhesViewModel.entrarNoGrupo(ponto.id, userEmail)
             } else {
                 Toast.makeText(context, "Você precisa estar logado para participar do grupo", Toast.LENGTH_SHORT).show()
             }
@@ -93,11 +86,26 @@ class DetalhesFragment : Fragment() {
         buttonSair.setOnClickListener {
             if (sharedViewModel.isLogged.value == true) {
                 val userEmail = sharedViewModel.getUserEmail() ?: return@setOnClickListener
-                sairDoGrupo(userEmail)
+                detalhesViewModel.sairDoGrupo(ponto.id, userEmail)
             } else {
                 Toast.makeText(context, "Você precisa estar logado para sair do grupo", Toast.LENGTH_SHORT).show()
             }
         }
+
+        detalhesViewModel.usuarios.observe(viewLifecycleOwner, Observer { usuarios ->
+            val adapter = UsuarioAdapter(requireContext(), usuarios)
+            listViewUsuarios.adapter = adapter
+        })
+
+        detalhesViewModel.isParticipando.observe(viewLifecycleOwner, Observer { isParticipando ->
+            if (isParticipando) {
+                buttonParticipar.visibility = View.GONE
+                buttonSair.visibility = View.VISIBLE
+            } else {
+                buttonParticipar.visibility = View.VISIBLE
+                buttonSair.visibility = View.GONE
+            }
+        })
 
         return view
     }
@@ -120,88 +128,5 @@ class DetalhesFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mapViewDetalhes.onLowMemory()
-    }
-
-    private fun verificarParticipacao(userEmail: String) {
-        pontosService.getUsuariosDoPonto(ponto.id).enqueue(object : Callback<List<usuario>> {
-            override fun onResponse(call: Call<List<usuario>>, response: Response<List<usuario>>) {
-                if (response.isSuccessful) {
-                    val usuarios = response.body()
-                    val usuarioParticipa = usuarios?.any { it.email == userEmail } ?: false
-                    if (usuarioParticipa) {
-                        buttonParticipar.visibility = View.GONE
-                        buttonSair.visibility = View.VISIBLE
-                    } else {
-                        buttonParticipar.visibility = View.VISIBLE
-                        buttonSair.visibility = View.GONE
-                    }
-                } else {
-                    Log.e("DetalhesFragment", "Falha na resposta: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<usuario>>, t: Throwable) {
-                Log.e("DetalhesFragment", "Erro ao verificar participação", t)
-                Toast.makeText(context, "Erro ao verificar participação", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun entrarNoGrupo(userEmail: String) {
-        pontosService.entrarNoPonto(ponto.id, userEmail).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    buttonParticipar.visibility = View.GONE
-                    buttonSair.visibility = View.VISIBLE
-                    Toast.makeText(context, "Você entrou no grupo", Toast.LENGTH_SHORT).show()
-                    carregarUsuariosDoPonto()
-                } else {
-                    Log.e("DetalhesFragment", "Falha na resposta: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Log.e("DetalhesFragment", "Erro ao entrar no grupo", t)
-                Toast.makeText(context, "Erro ao entrar no grupo", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun sairDoGrupo(userEmail: String) {
-        pontosService.sairDoPonto(ponto.id, userEmail).enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    buttonParticipar.visibility = View.VISIBLE
-                    buttonSair.visibility = View.GONE
-                    Toast.makeText(context, "Você saiu do grupo", Toast.LENGTH_SHORT).show()
-                    carregarUsuariosDoPonto()
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(context, "Erro ao sair do grupo", Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    private fun carregarUsuariosDoPonto() {
-        pontosService.getUsuariosDoPonto(ponto.id).enqueue(object : Callback<List<usuario>> {
-            override fun onResponse(call: Call<List<usuario>>, response: Response<List<usuario>>) {
-                if (response.isSuccessful) {
-                    val usuarios = response.body()
-                    if (usuarios != null) {
-                        val adapter = UsuarioAdapter(requireContext(), usuarios)
-                        listViewUsuarios.adapter = adapter
-                    }
-                } else {
-                    Log.e("DetalhesFragment", "Falha na resposta: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<usuario>>, t: Throwable) {
-                Log.e("DetalhesFragment", "Erro ao carregar usuários do ponto", t)
-                Toast.makeText(context, "Erro ao carregar usuários do ponto", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 }

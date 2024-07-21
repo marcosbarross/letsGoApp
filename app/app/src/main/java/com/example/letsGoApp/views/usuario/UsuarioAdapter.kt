@@ -1,4 +1,4 @@
-package com.example.letsGoApp.controllers
+package com.example.letsGoApp.views.usuario
 
 import android.content.Context
 import android.view.LayoutInflater
