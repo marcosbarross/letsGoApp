@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.letsGoApp.R
 import com.example.letsGoApp.interfaces.UsuariosService
 import com.example.letsGoApp.models.usuario
@@ -89,6 +90,7 @@ class cadastroUsuarioFragment : Fragment() {
 
         cadastrarButton.setOnClickListener {
             cadastrarUsuario()
+            findNavController().navigate(R.id.navigation_mapa)
         }
 
         return view
