@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.letsGoApp.controllers.apiUtils
+import com.example.letsGoApp.controllers.Utils
 import com.example.letsGoApp.models.usuario
 import com.example.letsGoApp.models.pontos
 import com.example.letsGoApp.R
@@ -48,7 +48,7 @@ class PerfilUsuarioFragment : Fragment(), LocationController.LocationCallback {
         nomeUsuarioLabel = rootView.findViewById(R.id.nomeUsuarioLabel)
         pontosListView = rootView.findViewById(R.id.pontosListView)
 
-        usuariosService = Retrofit.Builder().baseUrl(apiUtils.getPathString()).addConverterFactory(GsonConverterFactory.create()).build().create(UsuariosService::class.java)
+        usuariosService = Retrofit.Builder().baseUrl(Utils.getPathString()).addConverterFactory(GsonConverterFactory.create()).build().create(UsuariosService::class.java)
 
         sairButton.setOnClickListener {
             sharedViewModel.setUserId(Int.MIN_VALUE)
@@ -67,7 +67,7 @@ class PerfilUsuarioFragment : Fragment(), LocationController.LocationCallback {
                 override fun onResponse(call: Call<usuario>, response: Response<usuario>) {
                     if (response.isSuccessful) {
                         val usuario = response.body()
-                        nomeUsuarioLabel.text = apiUtils.capitalize(usuario?.nome?: "Nome não disponível) ")
+                        nomeUsuarioLabel.text = Utils.capitalize(usuario?.nome?: "Nome não disponível) ")
                     } else {
                         nomeUsuarioLabel.text = "Erro ao carregar nome"
                     }

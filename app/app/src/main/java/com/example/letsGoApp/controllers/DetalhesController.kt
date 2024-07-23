@@ -17,7 +17,7 @@ class DetalhesController : ViewModel() {
     private val _isParticipando = MutableLiveData<Boolean>()
     val isParticipando: LiveData<Boolean> get() = _isParticipando
 
-    private val pontosService: PontosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(PontosService::class.java)
+    private val pontosService: PontosService = Utils.getRetrofitInstance(Utils.getPathString()).create(PontosService::class.java)
 
     fun carregarUsuariosDoPonto(pontoId: Int) {
         pontosService.getUsuariosDoPonto(pontoId).enqueue(object : Callback<List<usuario>> {

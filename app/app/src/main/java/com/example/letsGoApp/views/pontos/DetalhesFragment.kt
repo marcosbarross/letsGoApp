@@ -42,6 +42,7 @@ class DetalhesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view = inflater.inflate(R.layout.fragment_detalhes, container, false)
 
         nomeAtividadeDetalhes = view.findViewById(R.id.nomeAtividadeDetalhes)

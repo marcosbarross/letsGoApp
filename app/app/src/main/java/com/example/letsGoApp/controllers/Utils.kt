@@ -4,11 +4,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.security.MessageDigest
 import android.util.Patterns
-import java.util.stream.DoubleStream.concat
 
-class apiUtils {
+class Utils {
     companion object {
-        val path = "http://192.168.1.113:8000/"
+        val path = "https://letsgoapp.onrender.com"
 
         fun getRetrofitInstance(path: String): Retrofit {
             return Retrofit.Builder()

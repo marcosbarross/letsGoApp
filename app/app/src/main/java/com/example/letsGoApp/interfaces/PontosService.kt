@@ -3,6 +3,7 @@ package com.example.letsGoApp.interfaces
 import com.example.letsGoApp.models.AuthResponse
 import com.example.letsGoApp.models.PontoOrdenado
 import com.example.letsGoApp.models.pontos
+import com.example.letsGoApp.models.PontoCreate
 import com.example.letsGoApp.models.usuario
 import com.example.letsGoApp.models.usuarioAuth
 import retrofit2.Call
@@ -15,8 +16,8 @@ interface PontosService {
     @GET("pontos/{id}")
     fun getPonto(@Path("id") id: Int): Call<pontos>
 
-    @POST("pontos")
-    fun createPonto(@Body pontos: pontos): Call<pontos>
+    @POST("createPontos/")
+    fun createPonto(@Body pontos: PontoCreate): Call<PontoCreate>
 
     @PUT("pontos/{id}")
     fun updatePonto(@Path("id") id: Int, @Body pontos: pontos): Call<pontos>

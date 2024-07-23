@@ -4,6 +4,15 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
+data class PontoCreate(
+    @SerializedName("id_usuario") val idUsuario: Int,
+    @SerializedName("atividade") val atividade: String,
+    @SerializedName("latitude") val latitude: Double,
+    @SerializedName("longitude") val longitude: Double,
+    @SerializedName("dias_semana") val diasSemana: String,
+    @SerializedName("horario") val horario: String
+)
+
 data class pontos(
     @SerializedName("id_usuario" )val id_usuario: Int,
     @SerializedName("id_ponto" )val id_ponto: Int,

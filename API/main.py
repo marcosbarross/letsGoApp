@@ -157,7 +157,7 @@ def get_pontos_do_usuario(usuario_id: int, db: Session = Depends(get_db)):
         ) for p in pontos
     ]
 
-@app.post("/pontos/", response_model=PontoCreate)
+@app.post("/createPontos/", response_model=PontoCreate)
 def create_ponto(ponto: PontoCreate, db: Session = Depends(get_db)):
     db_ponto = Ponto(
         id_usuario=ponto.id_usuario,

@@ -13,8 +13,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.letsGoApp.controllers.apiUtils
-import com.example.letsGoApp.controllers.apiUtils.Companion.toSHA256
+import com.example.letsGoApp.controllers.Utils
+import com.example.letsGoApp.controllers.Utils.Companion.toSHA256
 import com.example.letsGoApp.models.AuthResponse
 import com.example.letsGoApp.models.usuarioAuth
 import com.example.letsGoApp.R
@@ -44,7 +44,7 @@ class LoginFragment : Fragment() {
                 val senha = view.findViewById<EditText>(R.id.passwordInput).text.toString().toSHA256()
                 val usuario = usuarioAuth(email, senha)
 
-                usuariosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(UsuariosService::class.java)
+                usuariosService = Utils.getRetrofitInstance(Utils.getPathString()).create(UsuariosService::class.java)
                 usuariosService.autenticarUsuario(usuario).enqueue(object : Callback<AuthResponse> {
                     override fun onResponse(call: Call<AuthResponse>, response: Response<AuthResponse>) {
                         Log.d("API_RESPONSE", "Response: ${response.body()}")

@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_cadastro_ponto"
-        android:name="com.example.letsGoApp.views.pontos.cadastroPonto"
+        android:name="com.example.letsGoApp.views.pontos.CadastroPontoFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_cadastro_ponto" />
 

@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.letsGoApp.R
 import com.example.letsGoApp.interfaces.UsuariosService
 import com.example.letsGoApp.models.usuario
-import com.example.letsGoApp.controllers.apiUtils
-import com.example.letsGoApp.controllers.apiUtils.Companion.toSHA256
+import com.example.letsGoApp.controllers.Utils
+import com.example.letsGoApp.controllers.Utils.Companion.toSHA256
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,7 +46,7 @@ class cadastroUsuarioFragment : Fragment() {
         emailInput = view.findViewById(R.id.editTextTextEmailAddress)
         senhaInput = view.findViewById(R.id.senhaUsuarioCadastroInput)
         cadastrarButton = view.findViewById(R.id.buttonCadastroUsuario)
-        usuariosService = apiUtils.getRetrofitInstance(apiUtils.getPathString()).create(UsuariosService::class.java)
+        usuariosService = Utils.getRetrofitInstance(Utils.getPathString()).create(UsuariosService::class.java)
 
         dataNascimentoInput.addTextChangedListener(object : TextWatcher {
             private var isUpdating = false
@@ -110,7 +110,7 @@ class cadastroUsuarioFragment : Fragment() {
             return
         }
 
-        if (!apiUtils.isEmailValid(email)) {
+        if (!Utils.isEmailValid(email)) {
             Toast.makeText(context, "Por favor, insira um email válido", Toast.LENGTH_SHORT).show()
             return
         }

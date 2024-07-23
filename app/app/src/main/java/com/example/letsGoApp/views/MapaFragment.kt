@@ -11,8 +11,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.letsGoApp.R
 import com.example.letsGoApp.controllers.PermissionController
-import com.example.letsGoApp.controllers.apiUtils.Companion.getRetrofitInstance
-import com.example.letsGoApp.controllers.apiUtils.Companion.getPathString
+import com.example.letsGoApp.controllers.Utils.Companion.getRetrofitInstance
+import com.example.letsGoApp.controllers.Utils.Companion.getPathString
 import com.example.letsGoApp.databinding.FragmentMapaBinding
 import com.example.letsGoApp.interfaces.PontosService
 import com.example.letsGoApp.models.pontos
@@ -75,6 +75,8 @@ class MapaFragment : Fragment() {
             }
 
             mMap.setOnMapLongClickListener { latLng ->
+                latitude = latLng.latitude
+                longitude = latLng.longitude
                 sharedViewModel.isLogged.observe(viewLifecycleOwner) { isLogged ->
                     if (isLogged) {
                         findNavController().navigate(R.id.action_home_to_cadastro_estacionamentos)
@@ -153,6 +155,10 @@ class MapaFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    companion object {
+        var longitude: Double = 0.00
+        var latitude: Double = 0.00
     }
 }
 

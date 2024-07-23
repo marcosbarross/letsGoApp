@@ -6,15 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.letsGoApp.R
 import com.example.letsGoApp.databinding.FragmentListaBinding
 import com.example.letsGoApp.interfaces.PontosService
-import com.example.letsGoApp.controllers.apiUtils
+import com.example.letsGoApp.controllers.Utils
 import com.example.letsGoApp.views.pontos.PontosAdapter
 import com.example.letsGoApp.controllers.LocationController
 import com.example.letsGoApp.models.PontoOrdenado
+import com.example.letsGoApp.views.usuario.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +29,7 @@ class ListaFragment : Fragment(), PontosAdapter.OnItemClickListener {
     private var _binding: FragmentListaBinding? = null
     private val binding get() = _binding!!
     private lateinit var locationController: LocationController
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +38,7 @@ class ListaFragment : Fragment(), PontosAdapter.OnItemClickListener {
         _binding = FragmentListaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val retrofit = apiUtils.getRetrofitInstance(apiUtils.getPathString())
+        val retrofit = Utils.getRetrofitInstance(Utils.getPathString())
         val service = retrofit.create(PontosService::class.java)
 
         locationController = LocationController(this@ListaFragment, object : LocationController.LocationCallback {
@@ -85,7 +88,14 @@ class ListaFragment : Fragment(), PontosAdapter.OnItemClickListener {
         val bundle = Bundle().apply {
             putParcelable("ponto", ponto)
         }
-        findNavController().navigate(R.id.action_navigation_lista_to_detalhesFragment, bundle)
+        sharedViewModel.isLogged.observe(viewLifecycleOwner) { isLogged ->
+            if (isLogged) {
+                findNavController().navigate(R.id.action_navigation_lista_to_detalhesFragment, bundle)
+            } else {
+                Toast.makeText(context, "É preciso fazer login", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_to_login)
+            }
+        }
     }
 
     override fun onDestroyView() {
