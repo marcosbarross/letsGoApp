@@ -1,41 +1,31 @@
 package com.example.letsGoApp.views.usuario
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.example.letsGoApp.R
+import com.example.letsGoApp.controllers.Utils
 import com.example.letsGoApp.models.usuario
 
-class UsuarioAdapter(private val context: Context, private val usuarios: List<usuario>) : BaseAdapter() {
+class UsuarioAdapter(private val usuarios: List<usuario>) : RecyclerView.Adapter<UsuarioAdapter.UsuarioViewHolder>() {
 
-    override fun getCount(): Int {
-        return usuarios.size
+    class UsuarioViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textViewNome: TextView = view.findViewById(R.id.textViewNome)
     }
 
-    override fun getItem(position: Int): Any {
-        return usuarios[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsuarioViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_usuario, parent, false)
+        return UsuarioViewHolder(view)
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View
-        if (convertView == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.item_usuario, parent, false)
-        } else {
-            view = convertView
-        }
-
-        val textViewNome = view.findViewById<TextView>(R.id.textViewNome)
-
+    override fun onBindViewHolder(holder: UsuarioViewHolder, position: Int) {
         val usuario = usuarios[position]
-        textViewNome.text = usuario.nome
+        holder.textViewNome.text = Utils.capitalize(usuario.nome)
+    }
 
-        return view
+    override fun getItemCount(): Int {
+        return usuarios.size
     }
 }

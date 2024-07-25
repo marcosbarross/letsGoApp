@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.letsGoApp.R
 import com.example.letsGoApp.controllers.DetalhesController
 import com.example.letsGoApp.views.usuario.UsuarioAdapter
@@ -32,7 +33,7 @@ class DetalhesFragment : Fragment() {
     private lateinit var infoTextView: TextView
     private lateinit var buttonParticipar: Button
     private lateinit var buttonSair: Button
-    private lateinit var listViewUsuarios: ListView
+    private lateinit var recyclerViewUsuarios: RecyclerView
     private lateinit var mapViewDetalhes: MapView
     private lateinit var mMap: GoogleMap
 
@@ -49,7 +50,7 @@ class DetalhesFragment : Fragment() {
         infoTextView = view.findViewById(R.id.infoTextView)
         buttonParticipar = view.findViewById(R.id.buttonParticipar)
         buttonSair = view.findViewById(R.id.buttonSair)
-        listViewUsuarios = view.findViewById(R.id.listViewUsuarios)
+        recyclerViewUsuarios = view.findViewById(R.id.recyclerViewUsuarios)
         mapViewDetalhes = view.findViewById(R.id.mapViewDetalhes)
 
         mapViewDetalhes.onCreate(savedInstanceState)
@@ -93,9 +94,10 @@ class DetalhesFragment : Fragment() {
             }
         }
 
+        recyclerViewUsuarios.layoutManager = LinearLayoutManager(context)
         detalhesViewModel.usuarios.observe(viewLifecycleOwner, Observer { usuarios ->
-            val adapter = UsuarioAdapter(requireContext(), usuarios)
-            listViewUsuarios.adapter = adapter
+            val adapter = UsuarioAdapter(usuarios)
+            recyclerViewUsuarios.adapter = adapter
         })
 
         detalhesViewModel.isParticipando.observe(viewLifecycleOwner, Observer { isParticipando ->

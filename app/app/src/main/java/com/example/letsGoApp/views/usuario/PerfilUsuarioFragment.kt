@@ -67,12 +67,11 @@ class PerfilUsuarioFragment : Fragment(), LocationController.LocationCallback {
                 override fun onResponse(call: Call<usuario>, response: Response<usuario>) {
                     if (response.isSuccessful) {
                         val usuario = response.body()
-                        nomeUsuarioLabel.text = Utils.capitalize(usuario?.nome?: "Nome não disponível) ")
-                    } else {
-                        nomeUsuarioLabel.text = "Erro ao carregar nome"
+                        if (usuario != null) {
+                            nomeUsuarioLabel.text = Utils.capitalize("Olá, ${usuario.nome}!")
+                        }
                     }
                 }
-
                 override fun onFailure(call: Call<usuario>, t: Throwable) {
                     nomeUsuarioLabel.text = "Erro ao carregar nome"
                 }
@@ -81,9 +80,6 @@ class PerfilUsuarioFragment : Fragment(), LocationController.LocationCallback {
 
         return rootView
     }
-
-
-
 
     override fun onLocationReceived(latitude: Double, longitude: Double) {
         userLocationLat = latitude
